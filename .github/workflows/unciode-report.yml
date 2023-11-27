@@ -58,7 +58,8 @@ jobs:
       run: |
         sed -i -E "s@OpenType\.js(\xC2\xA0| )[0-9.]+@<a href=\"https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}/commits/${{ env.COMMIT_SHA }}\">OpenType.js ${{ env.SHORT_COMMIT_SHA }}</a>@" reports/${{ env.COMMIT_SHA }}.html
 
-    - run: node .github/workflows/scripts/report-counter.js
+    - name: parse passing/failing tests
+      run: node .github/workflows/scripts/report-counter.js
 
     - name: Upload build artifact
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
