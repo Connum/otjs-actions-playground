@@ -73,6 +73,6 @@ jobs:
       with:
         message: |
           Hello world ! :wave:
-          ${{ ARTIFACT_URL }}
+          ${{ env.ARTIFACT_URL }}
         reactions: eyes, rocket
       
