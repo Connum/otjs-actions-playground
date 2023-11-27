@@ -65,9 +65,9 @@ jobs:
       run:  |
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           REPORT_SUMMARY=$(node .github/workflows/scripts/report-counter.js)
-          echo "REPORT_SUMMARY<<$EOF" >> $GITHUB_OUTPUT
-          echo "$REPORT_SUMMARY" >> $GITHUB_OUTPUT
-          echo "$EOF" >> $GITHUB_OUTPUT
+          echo "REPORT_SUMMARY<<$EOF" >> $GITHUB_ENV
+          echo "$REPORT_SUMMARY" >> $GITHUB_ENV
+          echo "$EOF" >> $GITHUB_ENV
 
     - name: Upload build artifact
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
