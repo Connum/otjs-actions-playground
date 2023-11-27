@@ -30,6 +30,16 @@ jobs:
       REPORT_SUMMARY: ''
 
     steps:
+    
+    - name: Checkout code
+      if: ${{ env.PUSH_TO_MAIN == 'false' }}
+      uses: actions/checkout@v4
+    - name: Checkout code (full-depth)
+      if: ${{ env.PUSH_TO_MAIN == 'true' }}
+      uses: actions/checkout@v4
+      with:
+        # important in order to make amending not break the history
+        fetch-depth: 0
      
     - name: Get parent commit
       if: ${{ env.PUSH_TO_MAIN == 'true' }}
@@ -42,16 +52,6 @@ jobs:
         SHORT_COMMIT_SHA=$(echo "${{ env.COMMIT_SHA }}" | cut -c 1-7)
         echo "SHORT_COMMIT_SHA=$SHORT_COMMIT_SHA" >> $GITHUB_ENV
         echo "REPORT_FILE=${{ env.REPORT_DIR }}/${{ env.COMMIT_SHA }}.html" >> $GITHUB_ENV
-      
-    - name: Checkout code
-      if: ${{ env.PUSH_TO_MAIN == 'false' }}
-      uses: actions/checkout@v4
-    - name: Checkout code (full-depth)
-      if: ${{ env.PUSH_TO_MAIN == 'true' }}
-      uses: actions/checkout@v4
-      with:
-        # important in order to make amending not break the history
-        fetch-depth: 0
 
     - name: Setup node
       uses: actions/setup-node@v4
