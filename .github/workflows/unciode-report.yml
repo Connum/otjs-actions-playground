@@ -77,5 +77,5 @@ jobs:
         message: |
           Hello world ! :wave:
           ${{ env.ARTIFACT_URL }}
-        reactions: eyes, rocket
+        comment_tag: unicode_test_report
       
