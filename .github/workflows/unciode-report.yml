@@ -22,7 +22,7 @@ jobs:
 
     env:
       PUSH_TO_MAIN: ${{ github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) }}
-      COMMIT_SHA: ${{ github.event.pull_request.head.sha || (git rev-parse HEAD^1) }}
+      COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
       SHORT_COMMIT_SHA: ''
       ARTIFACT_URL: ''
       REPORT_DIR: 'docs/reports'
@@ -31,6 +31,12 @@ jobs:
 
     steps:
      
+    - name: Get parent commit
+      if: ${{ env.PUSH_TO_MAIN == 'true' }}
+      run: |
+        COMMIT_SHA=$(git rev-parse HEAD^1)
+        echo "COMMIT_SHA=$COMMIT_SHA" >> $GITHUB_ENV
+        
     - name: Set environment variables
       run: |
         SHORT_COMMIT_SHA=$(echo "${{ env.COMMIT_SHA }}" | cut -c 1-7)
