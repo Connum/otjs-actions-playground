@@ -47,9 +47,13 @@ jobs:
           echo "Generated HTML for merges to master. Commit logic will be added later."
         fi
 
+    - name: Replace version with commit hash
+      run: |
+        sed -i "s/OpenType.js [0-9.]*/OpenType.js ${{ env.COMMIT_SHA }}/g" reports/${{ env.COMMIT_SHA }}.html
+
     - name: Upload build artifact
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
-        name: html-artifact
+        name: unicode-text-rendering-report_${{ env.COMMIT_SHA }}
         path: reports/${{ env.COMMIT_SHA }}.html
