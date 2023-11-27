@@ -29,7 +29,12 @@ jobs:
         git clone --recursive https://github.com/unicode-org/text-rendering-tests.git
 
     - name: Ensure reports directory exists
-      run: mkdir -p ../reports
+      run: mkdir -p reports
+
+    # for speeding up the workflow when debugging this action
+    - name: Delete HTML files in testcases directory
+      run: |
+        find text-rendering-tests/testcases -name '*.html' -delete
       
     - name: Run check.py script
       run: |
