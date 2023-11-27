@@ -34,7 +34,7 @@ jobs:
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
       uses: actions/checkout@v4
     - name: Checkout code (full-depth)
-      if: ${{ env.PUSH_TO_MAIN }}
+      if: ${{ env.PUSH_TO_MAIN == 'true' }}
       uses: actions/checkout@v4
       with:
         # important in order to make amending not break the history
@@ -103,7 +103,7 @@ jobs:
         comment_tag: unicode_test_report
 
     - name: Amend report file to commit
-      if: ${{ env.PUSH_TO_MAIN }}
+      if: ${{ env.PUSH_TO_MAIN == 'true' }}
       run: |
           git config --global user.email "gitbot@openrct2.org"
           git config --global user.name "OpenRCT2 git bot"
