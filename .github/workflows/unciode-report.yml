@@ -113,7 +113,7 @@ jobs:
       if: ${{ env.PUSH_TO_MAIN == 'true' }}
       run: |
           git config --global user.email "github-actions@users.noreply.github.com"
-          git config --global user.name "opentype.js bot"
+          git config --global user.name "github-actions"
           git add "${{ env.REPORT_FILE }}"
           git commit --amend --no-edit
           git push --force-with-lease
