@@ -1,0 +1,30 @@
+name: Run Unicode Test Suite
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup node
+      uses: actions/setup-node@v4
+
+    - name: Setup ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: Clone text-rendering-tests repository
+      run: |
+        git clone --recursive https://github.com/unicode-org/text-rendering-tests.git
+
+    - name: Run check.py script
+      run: |
+        cd text-rendering-tests
+        python check.py --engine=OpenType.js
