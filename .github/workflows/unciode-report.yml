@@ -112,7 +112,8 @@ jobs:
     - name: Amend report file to commit
       if: ${{ env.PUSH_TO_MAIN == 'true' }}
       run: |
-          git config --global user.email "gitbot@openrct2.org"
-          git config --global user.name "OpenRCT2 git bot"
-          git commit -a --amend --no-edit
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git config --global user.name "opentype.js bot"
+          git add "${{ env.REPORT_FILE }}"
+          git commit --amend --no-edit
           git push --force-with-lease
