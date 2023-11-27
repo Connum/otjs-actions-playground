@@ -13,7 +13,7 @@ jobs:
     env:
       PUSH_TO_MAIN: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
-      SHORT_COMMIT_SHA: ${{ github.event.pull_request.head.sha | slice(0, 7) }}
+      SHORT_COMMIT_SHA: ${{ github.event.pull_request.head.sha::8 }}
 
     steps:
       
