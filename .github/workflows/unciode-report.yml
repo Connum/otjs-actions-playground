@@ -13,9 +13,14 @@ jobs:
     env:
       PUSH_TO_MAIN: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
-      SHORT_COMMIT_SHA: ${{ github.event.pull_request.head.sha::8 }}
+      SHORT_COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
 
     steps:
+     
+    - name: Set SHORT_COMMIT_SHA environment variable
+      run: |
+        SHORT_COMMIT_SHA=$(echo "${{ env.COMMIT_SHA }}" | cut -c 1-7)
+        echo "SHORT_COMMIT_SHA=$SHORT_COMMIT_SHA" >> $GITHUB_ENV
       
     - name: Checkout code
       uses: actions/checkout@v4
