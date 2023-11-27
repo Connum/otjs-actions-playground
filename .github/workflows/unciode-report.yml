@@ -52,4 +52,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: html-artifact
-        path: ../reports/${{ env.COMMIT_SHA }}.html
+        path: reports/${{ env.COMMIT_SHA }}.html
