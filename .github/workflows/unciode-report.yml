@@ -22,7 +22,7 @@ jobs:
 
     env:
       PUSH_TO_MAIN: ${{ github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) }}
-      COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      COMMIT_SHA: ${{ github.event.pull_request.head.sha || (git rev-parse HEAD^1) }}
       SHORT_COMMIT_SHA: ''
       ARTIFACT_URL: ''
       REPORT_DIR: 'docs/reports'
