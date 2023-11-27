@@ -64,7 +64,9 @@ jobs:
     - name: parse passing/failing tests
       run:  |
           REPORT_SUMMARY=$(((node .github/workflows/scripts/report-counter.js) 2>&1) || true)
-          echo "name=REPORT_SUMMARY::$REPORT_SUMMARY" >> $GITHUB_OUTPUT
+          echo "REPORT_SUMMARY<<$EOF" >> $GITHUB_OUTPUT
+          echo "$REPORT_SUMMARY" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
 
     - name: Upload build artifact
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
