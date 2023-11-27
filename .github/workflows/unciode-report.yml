@@ -48,7 +48,7 @@ jobs:
         fi
 
     - name: Upload build artifact
-      if: ${{ !env.PUSH_TO_MAIN }}
+      if: ${{ env.PUSH_TO_MAIN == 'false' }}
       uses: actions/upload-artifact@v2
       with:
         name: html-artifact
