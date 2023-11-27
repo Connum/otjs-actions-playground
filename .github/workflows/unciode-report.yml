@@ -63,6 +63,7 @@ jobs:
 
     - name: parse passing/failing tests
       run:  |
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           REPORT_SUMMARY=$(((node .github/workflows/scripts/report-counter.js) 2>&1) || true)
           echo "REPORT_SUMMARY<<$EOF" >> $GITHUB_OUTPUT
           echo "$REPORT_SUMMARY" >> $GITHUB_OUTPUT
