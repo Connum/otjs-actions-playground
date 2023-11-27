@@ -18,6 +18,7 @@ jobs:
       COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
       SHORT_COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
       ARTIFACT_URL: ''
+      REPORT_FILE: $(echo "reports/${{ env.COMMIT_SHA }}.html" )
 
     steps:
      
@@ -52,7 +53,7 @@ jobs:
     - name: Run check.py script
       run: |
         cd text-rendering-tests
-        python check.py --engine=OpenType.js --output="../reports/${{ env.COMMIT_SHA }}.html"
+        python check.py --engine=OpenType.js --output="../${{ env.REPORT_FILE }}"
         
     - name: Replace version with commit hash and link to PR commit
       run: |
@@ -66,7 +67,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: unicode-text-rendering-report_${{ env.SHORT_COMMIT_SHA }}
-        path: reports/${{ env.COMMIT_SHA }}.html
+        path: ${{ env.REPORT_FILE }}
   
     - name: Get artifact link
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
