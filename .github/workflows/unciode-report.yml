@@ -35,7 +35,7 @@ jobs:
     # for speeding up the workflow when debugging this action
     - name: Delete HTML files in testcases directory
       run: |
-        find text-rendering-tests/testcases -name '*.html' -delete
+        find text-rendering-tests/testcases -name '*.html' -not -name 'index.html' -delete
       
     - name: Run check.py script
       run: |
