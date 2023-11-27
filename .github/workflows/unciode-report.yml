@@ -71,7 +71,7 @@ jobs:
     - name: Get artifact link
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
       run: |
-        ARTIFACT_URL="https://github.com/${{ github.repository }}/actions/artifacts/${{ github.run_id }}"
+        ARTIFACT_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts"
         echo "ARTIFACT_URL=$ARTIFACT_URL" >> $GITHUB_ENV
 
     - name: Add or update status report comment
