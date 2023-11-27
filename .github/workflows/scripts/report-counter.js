@@ -21,6 +21,8 @@ JSDOM.fromFile(process.env.REPORT_FILE).then(dom => {
       const prev = prevUntil(table, 'h3');
       const headline = prev.pop();
 
+      if(!/GPOS/.test(headline.textContent.trim())) return false;
+
       const isVariableRelated = /^.VAR/.test(headline.textContent.trim()) || prev.find(d => /variable font|axis/i.test(d.textContent));              
       
       const returnValue = (variableFonts && isVariableRelated) || (!variableFonts && !isVariableRelated);
@@ -45,10 +47,11 @@ JSDOM.fromFile(process.env.REPORT_FILE).then(dom => {
     console.log(`❌ FAIL: ${failingCases}`);
   
     const blockCount = 12;
-    const blocksPassing = Math.round(passingCases/casesCount*blockCount);
+    const done = casesCount ? passingCases/casesCount : 0;
+    const blocksPassing = Math.round(done*blockCount);
     const blobksFailing = 12 - blocksPassing;
   
-    console.log(`${'🟩'.repeat(blocksPassing)}${'⬛'.repeat(blobksFailing)} ${(passingCases/casesCount*100).toFixed(2)}%\n\n`);
+    console.log(`${'🟩'.repeat(blocksPassing)}${'⬛'.repeat(blobksFailing)} ${(done*100).toFixed(2)}%\n\n`);
   }
 
   outputStats();
