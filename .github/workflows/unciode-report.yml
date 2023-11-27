@@ -13,6 +13,7 @@ jobs:
     env:
       PUSH_TO_MAIN: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+      SHORT_COMMIT_SHA: ${{ github.event.pull_request.head.sha | slice(0, 7) }}
 
     steps:
       
@@ -49,11 +50,11 @@ jobs:
             
     - name: Replace version with commit hash and link to PR commit
       run: |
-        sed -i -E "s@OpenType\.js(\xC2\xA0| )[0-9.]+@<a href=\"https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}/commits/${{ env.COMMIT_SHA }}\">OpenType.js ${{ env.COMMIT_SHA }}</a>@" reports/${{ env.COMMIT_SHA }}.html
+        sed -i -E "s@OpenType\.js(\xC2\xA0| )[0-9.]+@<a href=\"https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}/commits/${{ env.COMMIT_SHA }}\">OpenType.js ${{ env.SHORT_COMMIT_SHA }}</a>@" reports/${{ env.COMMIT_SHA }}.html
 
     - name: Upload build artifact
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
       uses: actions/upload-artifact@v3
       with:
-        name: unicode-text-rendering-report_${{ env.COMMIT_SHA }}
+        name: unicode-text-rendering-report_${{ env.SHORT_COMMIT_SHA }}
         path: reports/${{ env.COMMIT_SHA }}.html
