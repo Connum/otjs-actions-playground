@@ -1,10 +1,11 @@
 name: Run Unicode Test Suite
 
 on:
-  push:
+  pull_request:
     branches:
       - master
-  pull_request:
+      - develop
+    types: [ opened, synchronize, closed ]
   
 permissions: 
    pull-requests: write 
@@ -14,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PUSH_TO_MAIN: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+      PUSH_TO_MAIN: ${{ ( github.event_name == 'push' || github.event.pull_request.merged ) && github.ref == 'refs/heads/master' }}
       COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
       SHORT_COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
       ARTIFACT_URL: ''
