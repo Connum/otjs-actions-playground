@@ -49,7 +49,7 @@ jobs:
             
     - name: Replace version with commit hash and link to PR commit
       run: |
-        sed -i -E "s/OpenType\.js(\xC2\xA0| )[0-9.]+/<a href=\"https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}/commits/${{ env.COMMIT_SHA }}\">OpenType.js ${{ env.COMMIT_SHA }}</a>/" reports/${{ env.COMMIT_SHA }}.html
+        sed -i -E "s/OpenType\.js(\xC2\xA0| )[0-9.]+/<a href=\"https:\/\/github.com\/${{ github.repository }}\/pull\/${{ github.event.pull_request.number }}\/commits\/${{ env.COMMIT_SHA }}\">OpenType.js ${{ env.COMMIT_SHA }}</a>/" reports/${{ env.COMMIT_SHA }}.html
 
     - name: Upload build artifact
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
