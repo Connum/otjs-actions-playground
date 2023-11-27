@@ -40,7 +40,7 @@ jobs:
     - name: Run check.py script
       run: |
         cd text-rendering-tests
-        python check.py --engine=OpenType.js --output="../reports/${{ COMMIT_SHA }}.html"
+        python check.py --engine=OpenType.js --output="../reports/${{ env.COMMIT_SHA }}.html"
         if [[ "$PUSH_TO_MAIN" == "true" ]]; then
           # For pushes (merges to master)
           # Placeholder comment for later action
