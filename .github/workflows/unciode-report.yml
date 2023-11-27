@@ -28,6 +28,9 @@ jobs:
       run: |
         git clone --recursive https://github.com/unicode-org/text-rendering-tests.git
 
+    - name: Ensure reports directory exists
+      run: mkdir -p ../reports
+      
     - name: Run check.py script
       run: |
         cd text-rendering-tests
