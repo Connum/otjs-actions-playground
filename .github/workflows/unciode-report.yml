@@ -55,6 +55,7 @@ jobs:
         git config user.email "${{ github.actor }}@users.noreply.github.com"
         git add reports/${{ env.COMMIT_SHA }}.html
         git commit -m "Add unicode test suite report for commit ${{ env.SHORT_COMMIT_SHA }}"
+        git reset --soft
         git push
             
     - name: Replace version with commit hash and link to PR commit
