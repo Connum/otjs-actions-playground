@@ -1,1 +1,1 @@
-const foo = 'bdsgsdgarz!';
+const foo = 'baR!';
