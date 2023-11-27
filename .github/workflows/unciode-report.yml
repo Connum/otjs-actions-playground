@@ -19,6 +19,7 @@ jobs:
       SHORT_COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
       ARTIFACT_URL: ''
       REPORT_FILE: $(echo "reports/${{ env.COMMIT_SHA }}.html" )
+      REPORT_SUMMARY: ''
 
     steps:
      
@@ -60,7 +61,7 @@ jobs:
         sed -i -E "s@OpenType\.js(\xC2\xA0| )[0-9.]+@<a href=\"https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}/commits/${{ env.COMMIT_SHA }}\">OpenType.js ${{ env.SHORT_COMMIT_SHA }}</a>@" reports/${{ env.COMMIT_SHA }}.html
 
     - name: parse passing/failing tests
-      run: node .github/workflows/scripts/report-counter.js
+      run: echo "REPORT_SUMMARY=${ node .github/workflows/scripts/report-counter.js }" >> $GITHUB_ENV
 
     - name: Upload build artifact
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
@@ -80,5 +81,7 @@ jobs:
       uses: thollander/actions-comment-pull-request@v2.4.3
       with:
         message: |
-          Automatic [Unicode test suite](https://github.comunicode-org/text-rendering-tests) report for commit ${{ env.SHORT_COMMIT_SHA}} ([download](${{ env.ARTIFACT_URL }}))          
+          ℹ Automatic [Unicode test suite](https://github.comunicode-org/text-rendering-tests) report for commit ${{ env.SHORT_COMMIT_SHA}}:
+          ${{ env.REPORT_SUMMARY }}
+          [download report](${{ env.ARTIFACT_URL }})
         comment_tag: unicode_test_report
