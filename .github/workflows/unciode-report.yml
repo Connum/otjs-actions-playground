@@ -18,15 +18,16 @@ jobs:
       COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
       SHORT_COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
       ARTIFACT_URL: ''
-      REPORT_FILE: $(echo "reports/${{ env.COMMIT_SHA }}.html" )
+      REPORT_FILE: ''
       REPORT_SUMMARY: ''
 
     steps:
      
-    - name: Set SHORT_COMMIT_SHA environment variable
+    - name: Set environment variables
       run: |
         SHORT_COMMIT_SHA=$(echo "${{ env.COMMIT_SHA }}" | cut -c 1-7)
         echo "SHORT_COMMIT_SHA=$SHORT_COMMIT_SHA" >> $GITHUB_ENV
+        echo "REPORT_FILE=reports/${{ env.COMMIT_SHA }}.html" >> $GITHUB_ENV
       
     - name: Checkout code
       uses: actions/checkout@v4
