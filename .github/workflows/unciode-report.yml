@@ -51,4 +51,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: html-artifact
-        path: ../reports/${{ GITHUB_SHA }}.html
+        path: ../reports/${{ env.GITHUB_SHA }}.html
