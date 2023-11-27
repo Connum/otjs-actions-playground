@@ -27,7 +27,7 @@ jobs:
 
     - name: Clone text-rendering-tests repository
       run: |
-        git clone --recursive https://github.com/unicode-org/text-rendering-tests.git
+        git clone https://github.com/unicode-org/text-rendering-tests.git
 
     - name: Ensure reports directory exists
       run: mkdir -p reports
@@ -49,7 +49,7 @@ jobs:
 
     - name: Replace version with commit hash
       run: |
-        sed -i "s/OpenType.js [0-9.]*/OpenType.js ${{ env.COMMIT_SHA }}/g" reports/${{ env.COMMIT_SHA }}.html
+        sed -i "s/OpenType.js [0-9]*\(\.[0-9]*\)*/OpenType.js ${{ env.COMMIT_SHA }}/g" reports/${{ env.COMMIT_SHA }}.html
 
     - name: Upload build artifact
       if: ${{ env.PUSH_TO_MAIN == 'false' }}
