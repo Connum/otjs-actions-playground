@@ -10,7 +10,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      PUSH_TO_MAIN: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+
     steps:
+    - name: Determine commit hash
+      id: commit_hash
+      run: echo "::set-output name=hash::$(git rev-parse --short HEAD)"
+      
     - name: Checkout code
       uses: actions/checkout@v4
 
@@ -27,4 +34,16 @@ jobs:
     - name: Run check.py script
       run: |
         cd text-rendering-tests
-        python check.py --engine=OpenType.js
+        python check.py --engine=OpenType.js --output="../reports/${{ steps.commit_hash.outputs.hash }}.html"
+        if [[ "$PUSH_TO_MAIN" == "true" ]]; then
+          # For pushes (merges to master)
+          # Placeholder comment for later action
+          echo "Generated HTML for merges to master. Commit logic will be added later."
+        fi
+
+    - name: Upload build artifact
+      if: ${{ !PUSH_TO_MAIN }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: html-artifact
+        path: ../reports/${{ steps.commit_hash.outputs.hash }}.html
