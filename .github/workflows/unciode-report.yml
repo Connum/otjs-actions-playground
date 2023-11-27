@@ -17,7 +17,6 @@ jobs:
       PUSH_TO_MAIN: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
       SHORT_COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
-      GH_PAT: ${{ secrets.GH_PAT }}  # Personal Access Token with 'repo' and 'workflow' scope
       ARTIFACT_URL: ''
 
     steps:
@@ -75,7 +74,5 @@ jobs:
       uses: thollander/actions-comment-pull-request@v2.4.3
       with:
         message: |
-          Hello world ! :wave:
-          ${{ env.ARTIFACT_URL }}
+          Automatic [Unicode test suite](https://github.comunicode-org/text-rendering-tests) report for commit ${{ env.SHORT_COMMIT_SHA}} ([download](${{ env.ARTIFACT_URL }}))          
         comment_tag: unicode_test_report
-      
