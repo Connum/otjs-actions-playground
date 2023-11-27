@@ -21,8 +21,6 @@ JSDOM.fromFile(process.env.REPORT_FILE).then(dom => {
       const prev = prevUntil(table, 'h3');
       const headline = prev.pop();
 
-      if(!/GPOS/.test(headline.textContent.trim())) return false;
-
       const isVariableRelated = /^.VAR/.test(headline.textContent.trim()) || prev.find(d => /variable font|axis/i.test(d.textContent));              
       
       const returnValue = (variableFonts && isVariableRelated) || (!variableFonts && !isVariableRelated);
