@@ -10,7 +10,7 @@ on:
     branches:
       - master
       - main
-    types: [ opened, synchronize, closed ]
+    types: [ opened, synchronize ]
   
 permissions: 
    pull-requests: write 
@@ -72,6 +72,11 @@ jobs:
     - name: Delete HTML files in testcases directory
       run: |
         find text-rendering-tests/testcases -name '*.html' -not -name 'index.html' -not -name 'GPOS-*.html' -delete
+
+    - name: build files and copy to text script
+      run: |
+        npm run build
+        mv dist/* text-rendering-tests/node_modules/opentype.js/dist/
       
     - name: Run check.py script
       run: |
